@@ -42,8 +42,8 @@ export const DealList = ({ deals, hasNextPage, onLoadMore, isLoading = false }: 
 
   return (
     <div className="space-y-6">
-      {/* Deal Cards Grid */}
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {/* Deal Cards Grid - More condensed */}
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {deals.map((deal) => (
           <DealCard
             key={deal.id}
@@ -76,11 +76,11 @@ export const DealList = ({ deals, hasNextPage, onLoadMore, isLoading = false }: 
 
       {/* Loading State */}
       {isLoading && deals.length === 0 && (
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {Array.from({ length: 6 }).map((_, i) => (
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {Array.from({ length: 8 }).map((_, i) => (
             <div
               key={i}
-              className="h-64 rounded-xl bg-muted/50 animate-pulse"
+              className="h-40 rounded-xl bg-muted/50 animate-pulse"
             />
           ))}
         </div>

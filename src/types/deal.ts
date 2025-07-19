@@ -6,6 +6,7 @@ export interface Deal {
   source_url: string;
   upvotes: number;
   comment_count: number;
+  views: number;
   scraped_at: string;
   created_at: string;
   updated_at: string;

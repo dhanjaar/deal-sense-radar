@@ -18,6 +18,7 @@ const mockDeals: Deal[] = [
     source_url: 'https://forums.redflagdeals.com/deal1',
     upvotes: 156,
     comment_count: 89,
+    views: 2340,
     scraped_at: new Date().toISOString(),
     created_at: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(), // 2 hours ago
     updated_at: new Date().toISOString(),
@@ -41,6 +42,7 @@ const mockDeals: Deal[] = [
     source_url: 'https://forums.redflagdeals.com/deal2',
     upvotes: 234,
     comment_count: 156,
+    views: 4567,
     scraped_at: new Date().toISOString(),
     created_at: new Date(Date.now() - 4 * 60 * 60 * 1000).toISOString(), // 4 hours ago
     updated_at: new Date().toISOString()
@@ -53,6 +55,7 @@ const mockDeals: Deal[] = [
     source_url: 'https://forums.redflagdeals.com/deal3',
     upvotes: 89,
     comment_count: 67,
+    views: 1892,
     scraped_at: new Date().toISOString(),
     created_at: new Date(Date.now() - 6 * 60 * 60 * 1000).toISOString(), // 6 hours ago
     updated_at: new Date().toISOString(),
@@ -150,14 +153,14 @@ const Index = () => {
       <TrendingSection />
       
       {/* Latest Deals Section */}
-      <section className="py-16 lg:py-24">
+      <section className="py-16 lg:py-24 bg-gradient-to-br from-background to-muted/20">
         <div className="container mx-auto px-4">
-          <div className="max-w-6xl mx-auto">
+          <div className="max-w-7xl mx-auto">
             <div className="text-center mb-12">
               <h2 className="text-3xl lg:text-4xl font-bold mb-4">
                 Latest Analyzed Deals
               </h2>
-              <p className="text-xl text-muted-foreground">
+              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
                 Fresh deals with sentiment analysis from our community
               </p>
             </div>
