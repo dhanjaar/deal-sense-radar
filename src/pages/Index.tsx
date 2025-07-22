@@ -3,10 +3,11 @@ import { Header } from '@/components/layout/Header';
 import { HeroSection } from '@/components/sections/HeroSection';
 import { TrendingSection } from '@/components/sections/TrendingSection';
 import { DealList } from '@/components/deals/DealList';
+import { FilterTabs } from '@/components/ui/filter-tabs';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Deal } from '@/types/deal';
-import { BarChart3, Target, Zap, Shield } from 'lucide-react';
+import { BarChart3, Target, Zap, Shield, Search, Grid, List, SlidersHorizontal, Heart, Flame, Clock, Award } from 'lucide-react';
 
 // Mock data for demonstration
 const mockDeals: Deal[] = [
@@ -76,6 +77,9 @@ const mockDeals: Deal[] = [
 const Index = () => {
   const [deals] = useState<Deal[]>(mockDeals);
   const [isLoading, setIsLoading] = useState(false);
+  const [activeTab, setActiveTab] = useState('all');
+  const [activeTimeFilter, setActiveTimeFilter] = useState('all-time');
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
 
   const handleLoadMore = () => {
     setIsLoading(true);
@@ -85,27 +89,18 @@ const Index = () => {
     }, 1000);
   };
 
-  const features = [
-    {
-      icon: BarChart3,
-      title: 'AI Sentiment Analysis',
-      description: 'Advanced natural language processing to analyze community sentiment on every deal.'
-    },
-    {
-      icon: Target,
-      title: 'Smart Deal Discovery',
-      description: 'Find the best deals based on community engagement and sentiment scores.'
-    },
-    {
-      icon: Zap,
-      title: 'Real-time Updates',
-      description: 'Live scraping and analysis of RedFlagDeals forum posts and comments.'
-    },
-    {
-      icon: Shield,
-      title: 'Community Verified',
-      description: 'Leverage the wisdom of thousands of deal hunters and their discussions.'
-    }
+  const categoryTabs = [
+    { id: 'all', label: 'All', icon: <Flame className="w-4 h-4" />, count: deals.length },
+    { id: 'tech', label: 'Tech', icon: <Target className="w-4 h-4" />, count: 12 },
+    { id: 'grocery', label: 'Grocery', icon: <Heart className="w-4 h-4" />, count: 8 },
+    { id: 'fashion', label: 'Fashion', icon: <Award className="w-4 h-4" />, count: 6 }
+  ];
+
+  const timeTabs = [
+    { id: 'today', label: 'Today' },
+    { id: 'this-week', label: 'This Week' },
+    { id: 'this-month', label: 'This Month' },
+    { id: 'all-time', label: 'All Time' }
   ];
 
   return (
@@ -115,35 +110,53 @@ const Index = () => {
       {/* Hero Section */}
       <HeroSection />
       
-      {/* Features Section */}
-      <section className="py-16 lg:py-24 bg-muted/30">
+      {/* Filter Section */}
+      <section className="py-8 bg-muted/30">
         <div className="container mx-auto px-4">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl lg:text-4xl font-bold mb-4">
-                Why Choose DealAnalyzer?
-              </h2>
-              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                Get the edge in deal hunting with our advanced AI-powered platform
-              </p>
+          <div className="max-w-7xl mx-auto">
+            {/* Category Filters */}
+            <div className="flex flex-wrap items-center gap-4 mb-6">
+              <FilterTabs 
+                tabs={categoryTabs}
+                activeTab={activeTab}
+                onTabChange={setActiveTab}
+              />
             </div>
             
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {features.map((feature, index) => (
-                <Card key={index} className="glass-card group hover:shadow-elevated transition-all duration-300">
-                  <CardHeader className="text-center">
-                    <div className="w-12 h-12 mx-auto mb-4 rounded-lg bg-gradient-primary flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
-                      <feature.icon className="w-6 h-6 text-white" />
-                    </div>
-                    <CardTitle className="text-lg">{feature.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-muted-foreground text-center">
-                      {feature.description}
-                    </p>
-                  </CardContent>
-                </Card>
-              ))}
+            {/* Time Filters and Controls */}
+            <div className="flex flex-wrap items-center justify-between gap-4">
+              <div className="flex flex-wrap items-center gap-4">
+                <FilterTabs 
+                  tabs={timeTabs}
+                  activeTab={activeTimeFilter}
+                  onTabChange={setActiveTimeFilter}
+                />
+                <Button variant="ghost" size="sm" className="text-muted-foreground">
+                  <SlidersHorizontal className="w-4 h-4 mr-2" />
+                  Technologies
+                </Button>
+                <Button variant="ghost" size="sm" className="text-muted-foreground">
+                  Categories
+                </Button>
+              </div>
+              
+              <div className="flex items-center gap-2">
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
+                  <input 
+                    type="text" 
+                    placeholder="Search deals..." 
+                    className="pl-10 pr-4 py-2 border border-border rounded-lg bg-background text-sm w-64 focus:outline-none focus:ring-2 focus:ring-primary"
+                  />
+                </div>
+                <Button 
+                  variant="ghost" 
+                  size="sm"
+                  onClick={() => setViewMode(viewMode === 'grid' ? 'list' : 'grid')}
+                >
+                  {viewMode === 'grid' ? <List className="w-4 h-4" /> : <Grid className="w-4 h-4" />}
+                </Button>
+              </div>
             </div>
           </div>
         </div>
@@ -153,18 +166,9 @@ const Index = () => {
       <TrendingSection />
       
       {/* Latest Deals Section */}
-      <section className="py-16 lg:py-24 bg-gradient-to-br from-background to-muted/20">
+      <section className="py-8 bg-background">
         <div className="container mx-auto px-4">
           <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl lg:text-4xl font-bold mb-4">
-                Latest Analyzed Deals
-              </h2>
-              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                Fresh deals with sentiment analysis from our community
-              </p>
-            </div>
-            
             <DealList
               deals={deals}
               hasNextPage={true}

@@ -18,11 +18,11 @@ All colors MUST be HSL.
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 3.9%;
 
-    /* Purple primary colors matching fintech aesthetic */
-    --primary: 262 83% 58%;
+    /* Orange primary colors matching vibecodinghub aesthetic */
+    --primary: 20 90% 60%;
     --primary-foreground: 0 0% 100%;
-    --primary-light: 266 85% 65%;
-    --primary-dark: 258 85% 52%;
+    --primary-light: 20 100% 70%;
+    --primary-dark: 20 90% 50%;
 
     /* Modern secondary colors */
     --secondary: 270 15% 96%;
@@ -31,7 +31,7 @@ All colors MUST be HSL.
     --muted: 270 15% 96%;
     --muted-foreground: 240 5% 64.9%;
 
-    --accent: 266 85% 65%;
+    --accent: 20 100% 70%;
     --accent-foreground: 0 0% 100%;
 
     /* Status colors */
@@ -45,20 +45,20 @@ All colors MUST be HSL.
     /* Borders and inputs */
     --border: 270 15% 91%;
     --input: 270 15% 91%;
-    --ring: 262 83% 58%;
+    --ring: 20 90% 60%;
 
     /* Design tokens */
     --radius: 0.75rem;
     
     /* Gradients for backgrounds */
     --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-light)));
-    --gradient-hero: linear-gradient(135deg, hsl(262 83% 58%), hsl(266 85% 65%));
+    --gradient-hero: linear-gradient(135deg, hsl(20 90% 60%), hsl(20 100% 70%));
     --gradient-card: linear-gradient(145deg, hsla(0, 0%, 100%, 0.95), hsla(0, 0%, 100%, 0.8));
     
     /* Shadows */
-    --shadow-card: 0 4px 20px hsla(262, 83%, 58%, 0.1);
-    --shadow-elevated: 0 8px 40px hsla(262, 83%, 58%, 0.15);
-    --shadow-glow: 0 0 40px hsla(262, 83%, 58%, 0.2);
+    --shadow-card: 0 4px 20px hsla(20, 90%, 60%, 0.1);
+    --shadow-elevated: 0 8px 40px hsla(20, 90%, 60%, 0.15);
+    --shadow-glow: 0 0 40px hsla(20, 90%, 60%, 0.2);
     
     /* Animations */
     --transition-base: all 0.2s ease-out;
@@ -92,10 +92,10 @@ All colors MUST be HSL.
     --popover: 240 10% 6%;
     --popover-foreground: 270 15% 98%;
 
-    --primary: 262 83% 58%;
+    --primary: 20 90% 60%;
     --primary-foreground: 0 0% 100%;
-    --primary-light: 266 85% 65%;
-    --primary-dark: 258 85% 52%;
+    --primary-light: 20 100% 70%;
+    --primary-dark: 20 90% 50%;
 
     --secondary: 240 9% 9%;
     --secondary-foreground: 270 15% 98%;
@@ -103,7 +103,7 @@ All colors MUST be HSL.
     --muted: 240 9% 9%;
     --muted-foreground: 240 5% 64.9%;
 
-    --accent: 266 85% 65%;
+    --accent: 20 100% 70%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 72% 50%;
@@ -115,7 +115,7 @@ All colors MUST be HSL.
 
     --border: 240 9% 15%;
     --input: 240 9% 15%;
-    --ring: 262 83% 58%;
+    --ring: 20 90% 60%;
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;

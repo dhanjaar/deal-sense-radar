@@ -12,86 +12,50 @@ export const HeroSection = () => {
   ];
 
   return (
-    <section className="relative overflow-hidden">
-      {/* Background Gradient */}
-      <div className="absolute inset-0 hero-gradient" />
-      
+    <section className="relative overflow-hidden bg-background py-16">
       {/* Content */}
-      <div className="relative container mx-auto px-4 py-20 lg:py-32">
-        <div className="max-w-4xl mx-auto text-center text-white">
+      <div className="container mx-auto px-4">
+        <div className="max-w-4xl mx-auto text-center">
           {/* Badge */}
           <Badge 
             variant="secondary" 
-            className="mb-6 bg-white/20 text-white border-white/20 backdrop-blur-sm"
+            className="mb-6 bg-primary/10 text-primary border-primary/20"
           >
-            <TrendingUp className="w-3 h-3 mr-1" />
-            Real-time Deal Intelligence
+            🔥 Where AI Builds Better Deals
           </Badge>
 
           {/* Headline */}
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
-            Discover{' '}
-            <span className="relative">
-              <span className="bg-gradient-to-r from-yellow-300 to-orange-300 bg-clip-text text-transparent">
-                Smart Deals
-              </span>
-              <svg
-                className="absolute -bottom-2 left-0 w-full h-3 text-yellow-300/60"
-                viewBox="0 0 100 12"
-                fill="currentColor"
-              >
-                <path d="M0 8c30-6 70-6 100 0v4H0z" />
-              </svg>
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight text-foreground">
+            The Launchpad for{' '}
+            <span className="text-primary">
+              AI-Powered
             </span>
-            {' '}with AI-Powered Sentiment Analysis
+            {' '}Deals
           </h1>
 
           {/* Subtitle */}
-          <p className="text-xl md:text-2xl mb-8 text-white/90 leading-relaxed max-w-3xl mx-auto">
-            Join thousands of smart shoppers using advanced sentiment analysis to discover 
-            the best deals from RedFlagDeals community discussions.
+          <p className="text-xl md:text-2xl mb-8 text-muted-foreground leading-relaxed max-w-3xl mx-auto">
+            Explore the best deals crafted with advanced sentiment analysis. Vote, comment, and fuel the future of smart shopping.
           </p>
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
             <Button 
               size="lg" 
-              className="bg-white text-purple-600 hover:bg-white/90 font-semibold px-8 py-6 text-lg"
+              className="bg-primary hover:bg-primary/90 font-semibold px-8 py-3 text-lg"
             >
-              Start Analyzing Deals
+              Submit Deal
             </Button>
             <Button 
               size="lg" 
               variant="outline" 
-              className="border-white/30 text-white bg-white/10 hover:bg-white/20 backdrop-blur-sm font-semibold px-8 py-6 text-lg"
+              className="font-semibold px-8 py-3 text-lg"
             >
-              View Live Demo
+              Create Free Account
             </Button>
-          </div>
-
-          {/* Stats Cards */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
-            {stats.map((stat, index) => (
-              <Card key={index} className="glass-card border-white/20">
-                <CardContent className="p-6 text-center">
-                  <stat.icon className="w-8 h-8 mx-auto mb-3 text-primary" />
-                  <div className="text-2xl font-bold text-foreground mb-1">
-                    {stat.value}
-                  </div>
-                  <div className="text-sm text-muted-foreground">
-                    {stat.label}
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
           </div>
         </div>
       </div>
-
-      {/* Decorative Elements */}
-      <div className="absolute top-20 left-10 w-32 h-32 bg-white/10 rounded-full blur-3xl" />
-      <div className="absolute bottom-20 right-10 w-40 h-40 bg-yellow-300/20 rounded-full blur-3xl" />
-      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-white/5 rounded-full blur-3xl" />
     </section>
   );
 };

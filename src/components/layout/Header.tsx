@@ -27,8 +27,8 @@ export const Header = ({ user }: HeaderProps) => {
             <div className="h-8 w-8 bg-gradient-primary rounded-lg flex items-center justify-center">
               <TrendingUp className="h-4 w-4 text-white" />
             </div>
-            <span className="font-bold text-xl bg-gradient-primary bg-clip-text text-transparent">
-              DealAnalyzer
+            <span className="font-bold text-xl text-foreground">
+              vibedealhub.me
             </span>
           </div>
 
