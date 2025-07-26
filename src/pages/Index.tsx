@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Header } from '@/components/layout/Header';
 import { HeroSection } from '@/components/sections/HeroSection';
 import { TrendingSection } from '@/components/sections/TrendingSection';
@@ -75,11 +75,71 @@ const mockDeals: Deal[] = [
 ];
 
 const Index = () => {
-  const [deals] = useState<Deal[]>(mockDeals);
+  const [allDeals] = useState<Deal[]>(mockDeals);
+  const [deals, setDeals] = useState<Deal[]>(mockDeals);
   const [isLoading, setIsLoading] = useState(false);
   const [activeTab, setActiveTab] = useState('all');
   const [activeTimeFilter, setActiveTimeFilter] = useState('all-time');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [searchQuery, setSearchQuery] = useState('');
+
+  // Filter deals based on active filters
+  const filterDeals = () => {
+    let filtered = [...allDeals];
+    
+    // Filter by category
+    if (activeTab !== 'all') {
+      filtered = filtered.filter(deal => {
+        const title = deal.title.toLowerCase();
+        switch (activeTab) {
+          case 'tech':
+            return title.includes('macbook') || title.includes('samsung') || title.includes('tech') || title.includes('phone') || title.includes('laptop');
+          case 'grocery':
+            return title.includes('costco') || title.includes('grocery') || title.includes('food') || title.includes('gas');
+          case 'fashion':
+            return title.includes('fashion') || title.includes('clothing') || title.includes('shoes');
+          default:
+            return true;
+        }
+      });
+    }
+    
+    // Filter by time
+    if (activeTimeFilter !== 'all-time') {
+      const now = new Date();
+      filtered = filtered.filter(deal => {
+        const dealDate = new Date(deal.created_at);
+        const diffTime = now.getTime() - dealDate.getTime();
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        
+        switch (activeTimeFilter) {
+          case 'today':
+            return diffDays <= 1;
+          case 'this-week':
+            return diffDays <= 7;
+          case 'this-month':
+            return diffDays <= 30;
+          default:
+            return true;
+        }
+      });
+    }
+    
+    // Filter by search query
+    if (searchQuery.trim()) {
+      filtered = filtered.filter(deal =>
+        deal.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        deal.description.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+    
+    setDeals(filtered);
+  };
+
+  // Apply filters whenever filter states change
+  useEffect(() => {
+    filterDeals();
+  }, [activeTab, activeTimeFilter, searchQuery, allDeals]);
 
   const handleLoadMore = () => {
     setIsLoading(true);
@@ -89,11 +149,28 @@ const Index = () => {
     }, 1000);
   };
 
+  const getCategoryCount = (category: string) => {
+    if (category === 'all') return allDeals.length;
+    return allDeals.filter(deal => {
+      const title = deal.title.toLowerCase();
+      switch (category) {
+        case 'tech':
+          return title.includes('macbook') || title.includes('samsung') || title.includes('tech') || title.includes('phone') || title.includes('laptop');
+        case 'grocery':
+          return title.includes('costco') || title.includes('grocery') || title.includes('food') || title.includes('gas');
+        case 'fashion':
+          return title.includes('fashion') || title.includes('clothing') || title.includes('shoes');
+        default:
+          return false;
+      }
+    }).length;
+  };
+
   const categoryTabs = [
-    { id: 'all', label: 'All', icon: <Flame className="w-4 h-4" />, count: deals.length },
-    { id: 'tech', label: 'Tech', icon: <Target className="w-4 h-4" />, count: 12 },
-    { id: 'grocery', label: 'Grocery', icon: <Heart className="w-4 h-4" />, count: 8 },
-    { id: 'fashion', label: 'Fashion', icon: <Award className="w-4 h-4" />, count: 6 }
+    { id: 'all', label: 'All', icon: <Flame className="w-4 h-4" />, count: getCategoryCount('all') },
+    { id: 'tech', label: 'Tech', icon: <Target className="w-4 h-4" />, count: getCategoryCount('tech') },
+    { id: 'grocery', label: 'Grocery', icon: <Heart className="w-4 h-4" />, count: getCategoryCount('grocery') },
+    { id: 'fashion', label: 'Fashion', icon: <Award className="w-4 h-4" />, count: getCategoryCount('fashion') }
   ];
 
   const timeTabs = [
@@ -193,6 +270,8 @@ const Index = () => {
                       <input
                         type="text"
                         placeholder="Search deals..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
                         className="flex h-10 rounded-md border px-3 py-2 ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm pl-10 bg-background border-border text-sm w-full"
                       />
                     </div>
@@ -289,6 +368,8 @@ const Index = () => {
                     <input
                       type="text"
                       placeholder="Search deals..."
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
                       className="flex h-10 rounded-md border px-3 py-2 ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm pl-10 bg-background border-border text-sm w-full"
                     />
                   </div>
@@ -306,6 +387,18 @@ const Index = () => {
       <section className="py-8 bg-background">
         <div className="container mx-auto px-4">
           <div className="max-w-7xl mx-auto">
+            {/* Results indicator */}
+            <div className="mb-6">
+              <div className="flex items-center justify-between">
+                <h2 className="text-xl font-semibold text-foreground">
+                  {searchQuery ? `Search results for "${searchQuery}"` : 'Latest Deals'}
+                </h2>
+                <span className="text-sm text-muted-foreground">
+                  {deals.length} deal{deals.length !== 1 ? 's' : ''} found
+                </span>
+              </div>
+            </div>
+            
             <DealList
               deals={deals}
               hasNextPage={true}
