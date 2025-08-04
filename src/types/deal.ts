@@ -4,6 +4,9 @@ export interface Deal {
   description?: string;
   url: string;
   source_url: string;
+  status?: 'pending' | 'approved' | 'rejected' | 'sponsored';
+  category?: string;
+  technology?: string;
   upvotes: number;
   comment_count: number;
   views: number;
